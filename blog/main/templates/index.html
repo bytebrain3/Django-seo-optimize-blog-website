@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-screen px-1 sm:px-2 lg:px-2 mx-auto">
+    <div class="grid lg:grid-cols-5 gap-y-2 lg:gap-y-0 lg:gap-x-4">
+        <!-- Content (80% width) -->
+        <div class="lg:col-span-4 order-1 lg:order-1">
+            <div class="py-8 lg:pe-8">
+                <div class="space-y-5 lg:space-y-8">
+                    <div id="blog-list" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    </div>
+                    <!-- Load More Button -->
+                    <div id="load-more-container" class="flex justify-center py-4">
+                        <button id="load-more" class="btn btn-primary btn-sm">Load More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar (20% width) -->
+        <div class="lg:col-span-1 order-2 lg:order-2 p-4">
+            <div class="group flex flex-col bg-base-300 p-4 rounded-lg space-y-6">
+                <!-- Display Top Tags -->
+                <div>
+                    <h2 class="text-lg font-semibold mb-4">Top Tags</h2>
+                    <ul class="space-y-2">
+                        {% for tag in top_tags %}
+                            <li class="btn">
+                                <span class="font-medium">{{ tag.name }}</span>
+                                <div class="badge badge-primary">{{ tag.num_times }}</div>
+                            </li>
+                        {% empty %}
+                            <li class="text-neutral-400">No top tags available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %} 
+
+{% block script %}
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const loadMoreButton = document.getElementById('load-more');
+        const blogList = document.getElementById('blog-list');
+        let currentPage = 1;
+        let hasNextPage = true;
+
+        // Function to load blogs
+        function loadBlogs(page) {
+            fetch(`/blog_list_json/?page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    const blogs = data.blogs;
+                    hasNextPage = data.has_next;
+
+                    blogs.forEach(blog => {
+                        const blogElement = document.createElement('div');
+                        blogElement.className = 'w-full shadow bg-base-300 rounded-2xl p-4 overflow-hidden';
+                        blogElement.innerHTML = `
+                            <div class="w-full h-auto">
+                                ${blog.thumbnail_image ? `<img class="w-full h-auto max-h-60 object-cover rounded-2xl" src="${blog.thumbnail_image}" alt="Blog image">` : ''}
+                                ${blog.thumbnail_link ? `<img class="w-full h-auto min-h-60 max-h-60 object-cover rounded-2xl" src="${blog.thumbnail_link}" alt="${blog.title}">` : ''}
+                                ${!blog.thumbnail_image && !blog.thumbnail_link ? `<img class="w-full h-auto max-h-60 object-cover rounded-2xl" src="{% static 'default-thumbnail.jpg' %}" alt="${blog.title}">` : ''}
+                            </div>
+                            <h2 class="text-xl py-4">
+                                <a href="${blog.url}">
+                                    <span class="font-semibold">${blog.title}</span>
+                                </a>
+                            </h2>
+                            <span class="text-sm">${blog.created_at}</span>
+                            <p class="py-4 text-base">${blog.truncated_content}</p>
+                        `;
+                        blogList.appendChild(blogElement);
+                    });
+
+                    if (!hasNextPage) {
+                        loadMoreButton.style.display = 'none';
+                    } else {
+                        loadMoreButton.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading more blogs:', error);
+                });
+        }
+
+        // Load the first set of blogs on page load
+        loadBlogs(currentPage);
+
+        // Load more blogs on button click
+        loadMoreButton.addEventListener('click', function() {
+            if (!hasNextPage) return;
+
+            currentPage++;
+            loadBlogs(currentPage);
+        });
+    });
+
+{% endblock %}

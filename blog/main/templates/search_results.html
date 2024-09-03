@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Sesrch page
+{% endblock %}
+
+
+{% block head %}
+<meta property="og:title" content="GENZ CODER">
+<meta property="og:description" content="A blog website discuss About Coding. Write content about Programming and share resources of website owner">
+<meta property="og:image" content="{% static 'images/logo.png' %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GenZcoder">
+
+
+
+
+<meta name="twitter:card" content="{% static 'images/logo.png' %}">
+<meta name="twitter:title" content="GENZ CODER">
+<meta name="twitter:description" content="A blog website discuss About Coding. Write content about Programming and share resources of website owner">
+<meta name="twitter:image" content="{% static 'images/logo.png' %}">
+<meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+
+
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+
+
+
+
+{% if results %}
+            <ul role="list" class="divide-y divide-gray-200">
+                {% for result in results %}
+                    <li class="px-6 py-4">
+                        <a href="{% url 'blog_post' result.year result.month result.day result.slug %}" class="text-2xl font-semibold text-blue-600 hover:underline">
+                            {{ result.title }}
+                        </a>
+                        <p class="text-gray-600 mt-2">
+                            <span class="font-semibold">Categories:</span>
+                            {% for category in result.categories %}
+                                {{ category }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p class="mt-2 text-sm">
+                            {% if result.matched_title %}
+                                <span class="text-green-500 font-semibold">Match found in Title</span>
+                            {% endif %}
+                            {% if result.matched_category %}
+                                <span class="text-blue-500 font-semibold">Match found in Category</span>
+                            {% endif %}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+	
+	
+{% else %}
+	<p class="p-4 text-xl text-red-500">No results found for "{{ query }}".</p>
+
+{% endif %}
+
+{% endblock %}
+

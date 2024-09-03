@@ -1,0 +1,6 @@
+
+Django==5.1
+django-froala-editor==4.2.1
+django-taggit==6.0.0
+django-tailwind==3.8.0
+

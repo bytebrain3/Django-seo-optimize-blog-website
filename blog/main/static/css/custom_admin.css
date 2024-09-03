@@ -1,0 +1,40 @@
+/* static/css/custom_admin.css */
+.fr-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.fr-table thead {
+    background-color: #f9fafb; /* Tailwind gray-50 */
+}
+
+.fr-table th,
+.fr-table td {
+    border: 1px solid #e5e7eb; /* Tailwind gray-200 */
+    padding: 0.75rem; /* Tailwind py-3 px-6 */
+    text-align: left;
+}
+
+.fr-table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Tailwind white */
+}
+
+.fr-table tbody tr:nth-child(even) {
+    background-color: #f9fafb; /* Tailwind gray-50 */
+}
+
+.fr-table th {
+    color: #6b7280; /* Tailwind gray-500 */
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.fr-table a {
+    color: #4f46e5; /* Tailwind indigo-600 */
+    text-decoration: none;
+}
+
+.fr-table a:hover {
+    color: #4338ca; /* Tailwind indigo-900 */
+}

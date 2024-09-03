@@ -1,11 +1,13 @@
 
 # Django SEO Optimize Blog Website
+# Main page 
 ![project screen shot](Images/main_1.jpg)
 ![project screen shot 2](Images/main_2.jpg)
 
 This project is a Django-based blog website optimized for SEO, utilizing Tailwind CSS, Daisy UI, and a rich text editor. It features a clean and modern design, making it easy for users to manage and view blog content.
-
+# search page
 ![search_items.jpg](Images/search_items.jpg)
+# Category items 
 ![category_filtter.jpg](Images/category_filtter.jpg)
 
 
@@ -22,17 +24,18 @@ This project is a Django-based blog website optimized for SEO, utilizing Tailwin
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/django-seo-optimize-blog-website.git
+   git clone https://github.com/bytebrain3/Django-seo-optimize-blog-website.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd django-seo-optimize-blog-website
+   cd Django-seo-optimize-blog-website
    ```
 
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
+   cd Django-seo-optimize-blog-website/blog
    ```
 
 4. Apply migrations:
@@ -49,7 +52,7 @@ This project is a Django-based blog website optimized for SEO, utilizing Tailwin
    ```bash
    python manage.py runserver
    ```
-
+# Blog post page
 ![post.jpg](Images/post.jpg)
 
 ## Usage
